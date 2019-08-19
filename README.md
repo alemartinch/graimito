@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# eventactiontool
-=======
 # tetrasoft
->>>>>>> 566948e244d9d15b58b8f2c4312d70124e765bbd
 
 > A Vue.js project
 
@@ -32,7 +28,4 @@ npm test
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-<<<<<<< HEAD
-=======
 # graimito
->>>>>>> 566948e244d9d15b58b8f2c4312d70124e765bbd
