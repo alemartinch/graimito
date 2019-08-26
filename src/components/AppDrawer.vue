@@ -37,15 +37,15 @@
         </v-list-group>
         <v-list-item link>
           <v-list-item-icon>
-            <v-icon>mdi-format-list-bulleted-triangle</v-icon>
+            <v-icon>mdi-help-circle</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Reportes</v-list-item-title>
+          <v-list-item-title>Buscar Acciones Pendientes</v-list-item-title>
         </v-list-item>
         <v-list-item link>
           <v-list-item-icon>
-            <v-icon>mdi-help-circle</v-icon>
+            <v-icon>mdi-format-list-bulleted-triangle</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Ayuda</v-list-item-title>
+          <v-list-item-title>Reportes</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
