@@ -45,7 +45,7 @@
           <v-list-item-icon>
             <v-icon>mdi-format-list-bulleted-triangle</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Reportes</v-list-item-title>
+          <v-list-item-title>Estadísticas y Reportes</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
