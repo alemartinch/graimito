@@ -7,7 +7,7 @@
       <v-stepper-header>
         <v-stepper-step :complete="e1 > 1" step="1" editable>Evento</v-stepper-step>
 
-        <v-stepper-step :complete="e1 > 2" step="2" :editable="true">Tipo de Evento</v-stepper-step>
+        <v-stepper-step :complete="e1 > 2" step="2" :editable="isValidStepOne">Tipo de Evento</v-stepper-step>
 
         <v-stepper-step :complete="e1 > 3" step="3" :editable="true">Equipo</v-stepper-step>
 
@@ -18,43 +18,16 @@
 
       <v-stepper-items>
         <v-stepper-content step="1">
-          <FirstStep/>
+          <FirstStep
+            v-on:evt-firststep-ok="validateFirstStep"/>
         </v-stepper-content>
 
         <v-stepper-content step="2" editable>
-          
+          <SecondStep/>
         </v-stepper-content>
 
         <v-stepper-content step="3" editable>
-          <v-form v-model="isValidStepThree">
-            <v-row>
-              
-            </v-row>
-            <v-row>
-              <v-col cols="4">
-                <v-select :items="teamTypes" label="Equipo"></v-select>
-              </v-col>
-              <v-col cols="8">
-                <v-text-field
-                  v-model="event.eventTeam"
-                  label="ID Equipo"
-                  multiple
-                  chips
-                  hide-selected
-                ></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12">
-                <v-textarea label="Descripción"></v-textarea>
-              </v-col>
-            </v-row>
-          </v-form>
-          <v-btn
-            color="primary"
-            :disabled="!isValidStepThree"
-            @click="isValidStepTwo ? e1 = 4 : e1 = 3"
-          >Continue</v-btn>
+          <ThirdStep/>
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
@@ -63,50 +36,41 @@
 
 <script>
 import FirstStep from '@/components/event-page/FirstStep'
+import SecondStep from '@/components/event-page/SecondStep'
+import ThirdStep from '@/components/event-page/ThirdStep'
 export default {
   name: 'App',
   components: {
-    FirstStep
+    FirstStep,
+    SecondStep,
+    ThirdStep
   },
   data: () => ({
     e1: 0,
+    isValidStepOne: true,
+    isValidStepTwo: true,
     isValidStepThree: true,
     isValidStepFour: true,
     event: {
       id: 34,
       creationDate: new Date().toISOString().substr(0, 10),
+      ocurrenceDate: null,
       originator: 'Verónica Stagnitta',
-      eventLider: '',
+      leader: '',
       facility: '',
       sector: '',
+      equipment: null,
       shareLearning: false,
       resume: '',
       description: '',
-      eventFirstType: [],
-      eventSecondType: [],
-      eventTeam: []
+      type: null,
+      category: null,
+      team: [],
+      linkFolder: null,
+      cause: [],
+      actions: [],
+      status: 'OPEN'
     },
-    eventFirstTypes: [
-      { name: 'Auditoría Externa', value: 'GC' },
-      { name: 'Auditoría Interna', value: 'AI' },
-      { name: 'Hallazgos', value: 'HA' },
-      { name: 'Req.Internos / Legales', value: 'RIL' },
-      {
-        name: 'Evento No Planeado / Crítico / Accidentes o Incidentes',
-        value: 'ENP'
-      },
-      { name: 'Otros', value: 'OT' }
-    ],
-    eventSecondTypes: [
-      { name: 'Medio Ambiente', value: 'MD' },
-      { name: 'Higiene y Seguridad', value: 'HS' },
-      { name: 'Seguridad de Procesos', value: 'SPR' },
-      { name: 'Seguridad Patrimonial', value: 'SPA' },
-      { name: 'Confiabilidad/ Integridad Mecánica', value: 'CIM' },
-      { name: 'Diseño e Ingeniería', value: 'DI' },
-      { name: 'Calidad', value: 'CAL' },
-      { name: 'Otros', value: 'OT' }
-    ],
     teamTypes: [
       'Intercambiadores',
       'Agitadores',
@@ -122,11 +86,14 @@ export default {
     changeManagment: false
   }),
   computed: {
-    isValidStepTwo () {
-      return this.event.eventSecondType.length
-    }
   },
-  methods: {}
+  methods: {
+    validateFirstStep (fsEventData) {
+      this.event.ocurrenceDate = fsEventData.eventDate
+      this.isValidStepOne = true
+      this.e1 = 2
+    }
+  }
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <v-container>
-      <v-form ref="form" v-model="isValidStepOne">
+      <v-form ref="form" v-model="isValidStep">
           <v-row class="ml-1" justify="space-between">
             <v-col cols="3">
               <span>ID Evento:<br></span>
@@ -42,33 +42,11 @@
             </v-col>
             <v-spacer></v-spacer>
             <v-col md="3">
-              <v-menu
-                ref="menu"
-                v-model="menu"
-                :close-on-content-click="false"
-                :return-value.sync="date"
-                transition="scale-transition"
-                offset-y
-                full-width
-                min-width="290px"
+              <DatePicker
+                label="Fecha Evento"
                 :disabled="isNewEvent"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    v-model="date"
-                    label="Fecha evento"
-                    prepend-inner-icon="event"
-                    readonly
-                    v-on="on"
-                    :disabled="isNewEvent"
-                  ></v-text-field>
-                </template>
-                <v-date-picker v-model="date" no-title scrollable>
-                  <div class="flex-grow-1"></div>
-                  <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                  <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
-                </v-date-picker>
-              </v-menu>
+                v-on:evt-fecha-change="setEventDate"
+              />
             </v-col>
           </v-row>
           <v-row justify="space-between">
@@ -86,7 +64,7 @@
             </v-col>
             <v-col cols="8">
               <v-select
-                v-model="fsEventData.eventTeam"
+                v-model="fsEventData.team"
                 :items="liderships"
                 label="Participantes"
                 multiple
@@ -145,28 +123,31 @@
               </v-switch>
             </v-col>
           </v-row>
-          <!-- <h3>{{ isValidStepOne }}</h3> -->
+          <!-- <h3>{{ isValidStep }}</h3> -->
       </v-form>
       <v-row justify="end">
         <v-btn
           color="primary"
-          :disabled="!isValidStepOne"
-          @click="nothing"
+          :disabled="!isValidStep"
+          @click="sendValidateOk"
         >Continue</v-btn>
       </v-row>
   </v-container>
 </template>
 
 <script>
+import DatePicker from '@/components/event-page/DatePicker'
 export default {
-  name: 'FirstStep',
+  components: {
+    DatePicker
+  },
   data () {
     return {
       isNewEvent: true,
       fsEventData: {
         id: 34,
-        creationDate: new Date().toISOString().substr(0, 10),
         originator: 'Verónica Stagnitta',
+        creationDate: new Date().toISOString().substr(0, 10),
         eventDate: new Date().toISOString().substr(0, 10),
         eventLider: '',
         facility: '',
@@ -174,9 +155,9 @@ export default {
         shareLearning: false,
         resume: '',
         description: '',
-        eventTeam: []
+        team: []
       },
-      isValidStepOne: true,
+      isValidStep: true,
       estRules: [v => !!v || 'El establecimiento es requerido'],
       sectorRules: [v => !!v || 'El sector es requerido'],
       liderRules: [v => !!v || 'El líder de evento es requerido'],
@@ -191,6 +172,14 @@ export default {
         'Walter Plaza',
         'Alejandro Chandro'
       ]
+    }
+  },
+  methods: {
+    sendValidateOk () {
+      this.$emit('evt-firststep-ok', this.fsEventData)
+    },
+    setEventDate (date) {
+      this.fsEventData.eventDate = date
     }
   }
 }
