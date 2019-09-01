@@ -130,7 +130,7 @@
           color="primary"
           :disabled="!isValidStep"
           @click="sendValidateOk"
-        >Continue</v-btn>
+        >Continuar</v-btn>
       </v-row>
   </v-container>
 </template>

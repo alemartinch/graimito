@@ -7,13 +7,14 @@
       <v-stepper-header>
         <v-stepper-step :complete="e1 > 1" step="1" editable>Evento</v-stepper-step>
 
-        <v-stepper-step :complete="e1 > 2" step="2" :editable="isValidStepOne">Tipo de Evento</v-stepper-step>
+        <v-stepper-step :complete="e1 > 2" step="2" :editable="isValidStepOne">Equipo</v-stepper-step>
 
-        <v-stepper-step :complete="e1 > 3" step="3" :editable="true">Equipo</v-stepper-step>
+        <v-stepper-step :complete="e1 > 3" step="3" :editable="isValidStepTwo">Tipo de evento</v-stepper-step>
 
-        <v-stepper-step :complete="e1 > 4" step="4" :editable="true">Inv. de Causa</v-stepper-step>
+        <v-stepper-step :complete="e1 > 4" step="4" :editable="true">Acciones</v-stepper-step>
 
-        <v-stepper-step step="5" :editable="isValidStepFour">Acciones</v-stepper-step>
+        <v-stepper-step :complete="e1 > 5" step="5" :editable="true">Resumen</v-stepper-step>
+
       </v-stepper-header>
 
       <v-stepper-items>
@@ -23,10 +24,19 @@
         </v-stepper-content>
 
         <v-stepper-content step="2" editable>
-          <SecondStep/>
+          <SecondStep
+            v-on:evt-secondstep-ok="validateSecondStep"/>
         </v-stepper-content>
 
         <v-stepper-content step="3" editable>
+          <ThirdStep/>
+        </v-stepper-content>
+
+        <v-stepper-content step="4" editable>
+          <ThirdStep/>
+        </v-stepper-content>
+
+        <v-stepper-content step="5" editable>
           <ThirdStep/>
         </v-stepper-content>
       </v-stepper-items>
@@ -92,6 +102,10 @@ export default {
       this.event.ocurrenceDate = fsEventData.eventDate
       this.isValidStepOne = true
       this.e1 = 2
+    },
+    validateSecondStep (fsEventData) {
+      this.isValidStepTwo = true
+      this.e1 = 3
     }
   }
 }

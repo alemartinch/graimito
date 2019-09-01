@@ -40,7 +40,7 @@
       <v-btn
         color="primary"
         :disabled="!isValidStep"
-      >Continue</v-btn>
+      >Continuar</v-btn>
     </v-row>
   </v-container>
 </template>
